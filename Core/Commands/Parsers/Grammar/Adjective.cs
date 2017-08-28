@@ -28,23 +28,26 @@ namespace Grimm.Core.Commands.Parsers.Grammar
             .WithAlias("huge")
             .WithAlias("gigantic");
 
+        public static readonly Adjective WOODEN = new Adjective("wooden");
+
         // --------------------------------------------------------------------------------
 
-        public string Name { get; private set; }
+        public string Word { get; private set; }
         public List<string> Aliases { get; private set; } = new List<string>();
 
         public int? RequiredPosition;
 
         private Adjective(string name)
         {
-            this.Name = name;
+            this.Word = name;
 
             Adjectives.Add(this);
         }
 
         public static bool IsAdjective(string adjective)
         {
-            return Adjectives.Any(a => a.Name == adjective.ToLower());
+            return Adjectives.Any(a => a.Word == adjective.ToLower() ||
+                                       Adjective.IsOwnership(adjective));
         }
 
         public static bool IsOwnership(string owernshipAdjective)
@@ -61,6 +64,11 @@ namespace Grimm.Core.Commands.Parsers.Grammar
                    owernshipAdjective.ElementAt(length - 1) == 's';
         }
 
+        public static Adjective Parse(string nameOrAlias)
+        {
+            return Adjectives.FirstOrDefault(a => a.IsNameOrAlias(nameOrAlias));
+        }
+
         public bool HasRequiredPosition()
         {
             return this.RequiredPosition != null;
@@ -75,7 +83,7 @@ namespace Grimm.Core.Commands.Parsers.Grammar
 
         public bool IsNameOrAlias(string adjective)
         {
-            return this.Name.ToLower() == adjective ||
+            return this.Word.ToLower() == adjective ||
                    this.HasAlias(adjective);
         }
 
@@ -89,6 +97,11 @@ namespace Grimm.Core.Commands.Parsers.Grammar
             this.Aliases.Add(alias);
 
             return this;
+        }
+
+        public override string ToString()
+        {
+            return this.Word;
         }
     }
 }

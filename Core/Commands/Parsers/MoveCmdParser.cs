@@ -37,7 +37,8 @@ namespace Grimm.Core.Commands.Parsers
             var grammar = new GrammarParser(args);
             if (grammar.HasSubject())
             {
-                ParseAndExecuteDirection(grammar.GetSubject());
+                var subject = grammar.GetSubject();
+                ParseAndExecuteDirection(subject.Word);
             }
             else
             {
@@ -47,7 +48,7 @@ namespace Grimm.Core.Commands.Parsers
                     if (grammar.HasObjectOfPreposition(preposition))
                     {
                         var objOfPrep = grammar.GetObjectOfPreposition(preposition);
-                        ParseAndExecuteDirection(objOfPrep);
+                        ParseAndExecuteDirection(objOfPrep.Word);
                     }
                     else
                     {

@@ -1,4 +1,5 @@
-﻿using Grimm.Core.Commands.Prompts;
+﻿using Grimm.Core.Commands.Parsers.Grammar;
+using Grimm.Core.Commands.Prompts;
 using Grimm.Core.Commands.Prompts.Results;
 using Grimm.Core.Commands.Results;
 using Grimm.Game.GameWorld.Items;
@@ -62,20 +63,21 @@ namespace Grimm.Core.Commands.Parsers
             }
         }
 
-        private Item GetItem(string itemName)
+        private Item GetItem(Noun itemNoun)
         {
             var currentLoc = this.Command.GameState.GetPlayerLocation();
-            return currentLoc.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemName);
+            return currentLoc.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
+                                                                  i.HasAdjectives(itemNoun.Adjectives));
         }
 
-        private void TakeFrom(string target, string location)
+        private void TakeFrom(Noun target, Noun location)
         {
-            if (location != "chest")
+            if (location.Word != "chest")
             {
                 Output.WriteLine($"Cannot find a {location} here.");
                 return;
             }
-            else if (target != "sword")
+            else if (target.Word != "sword")
             {
                 Output.WriteLine($"There isn't a {target} inside the {location}");
                 return;

@@ -49,10 +49,12 @@
     <Compile Include="Core\Commands\Command.cs" />
     <Compile Include="Core\Commands\CommandDirectory.cs" />
     <Compile Include="Core\Commands\MoveCmd.cs" />
-    <Compile Include="Core\Commands\Parsers\GrammarParser.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Adjective.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\GrammarParser.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Noun.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Preposition.cs" />
     <Compile Include="Core\Commands\Parsers\ICommandParser.cs" />
     <Compile Include="Core\Commands\Parsers\MoveCmdParser.cs" />
-    <Compile Include="Core\Commands\Parsers\Preposition.cs" />
     <Compile Include="Core\Commands\Parsers\TakeCmdParser.cs" />
     <Compile Include="Core\Commands\Parsers\StartCmdParser.cs" />
     <Compile Include="Core\Commands\Prompts\ConfirmationPrompt.cs" />

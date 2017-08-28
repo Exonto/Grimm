@@ -1,4 +1,5 @@
-﻿using Grimm.Game.GameWorld;
+﻿using Grimm.Core.Commands.Parsers.Grammar;
+using Grimm.Game.GameWorld;
 using Grimm.Game.GameWorld.Items;
 using Grimm.Game.GameWorld.Util;
 using System;
@@ -33,9 +34,9 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
         private Location Build_TreeHouseTopFloor()
         {
             var bed = new Item("Bed")
-                .WithAdjective("my")
-                .WithAdjective("wooden")
-                .WithAdjective("small")
+                .WithAdjective(Adjective.MY)
+                .WithAdjective(Adjective.WOODEN)
+                .WithAdjective(Adjective.SMALL)
                 ;
             var chest = new Item("Chest");
             var ladder = new Item("Ladder");

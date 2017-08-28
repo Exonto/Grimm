@@ -36,14 +36,6 @@ namespace Grimm.Core.Commands.Parsers
             return stripped;
         }
 
-        private Arguments StripUnusedPrepositions()
-        {
-            Arguments stripped = new Arguments(this.Original.Args);
-            stripped.RemoveOccurrencesOf("of");
-
-            return stripped;
-        }
-
         public bool HasSubject()
         {
             if (!this.Args.HasAtLeast(1))
@@ -54,8 +46,7 @@ namespace Grimm.Core.Commands.Parsers
             if (Preposition.IsPreposition(arg))
                 return false;
 
-            if (Adjective.IsAdjective(arg) ||
-                Adjective.IsOwnership(arg))
+            if (Adjective.IsAdjective(arg))
             {
                 return GetSubjectOfAdjectiveAt(0) != null;
             }
@@ -63,24 +54,53 @@ namespace Grimm.Core.Commands.Parsers
             return true;
         }
 
-        public string GetSubject()
+        public Noun GetSubject()
         {
             if (!HasSubject())
                 throw new GrammarException("No subject.");
 
-            return this.Args.ElementAt(0);
+            return GetNounAt(0);
         }
 
-        public string GetSubjectOfAdjectiveAt(int adjectiveIdx)
+        private string GetSubjectOfAdjectiveAt(int adjectiveIdx)
         {
             for (var idx = adjectiveIdx; idx < this.Args.Args.Count; idx++)
             {
                 var arg = this.Args.Args[idx];
-                if (!Adjective.IsAdjective(arg) &&
-                    !Adjective.IsOwnership(arg))
+                if (!Adjective.IsAdjective(arg))
                     return arg;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Will build a noun by adding any adjectives beginning
+        /// at the provided idx.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        public Noun GetNounAt(int idx)
+        {
+            var adjectives = new List<Adjective>();
+            var nextArg = this.Args.Args.ElementAt(0);
+            while (Adjective.IsAdjective(nextArg))
+            {
+                var adjective = Adjective.Parse(nextArg);
+
+                // Enforces an adjectives required position
+                if (adjective.HasRequiredPosition() &&
+                    adjective.RequiredPosition != idx + 1)
+                    return null;
+
+                adjectives.Add(Adjective.Parse(nextArg));
+                ++idx;
+                nextArg = this.Args.Args.ElementAt(idx);
+            }
+
+            var noun = new Noun(nextArg);
+            adjectives.ForEach(a => noun.AddAdjective(a));
+
+            return noun;
         }
 
         public bool HasAnyPreposition()
@@ -113,7 +133,6 @@ namespace Grimm.Core.Commands.Parsers
                     break;
                 else if (Preposition.IsPreposition(arg))
                     ++order;
-
             }
 
             return order;
@@ -208,7 +227,7 @@ namespace Grimm.Core.Commands.Parsers
             }
         }
 
-        public string GetObjectOfPreposition(string preposition)
+        public Noun GetObjectOfPreposition(string preposition)
         {
             try
             {
@@ -226,7 +245,7 @@ namespace Grimm.Core.Commands.Parsers
                     nextArg = this.Args.Args.ElementAt(nextIdx);
                 }
 
-                return nextArg;
+                return GetNounAt(nextIdx);
             }
             catch (ArgumentOutOfRangeException)
             {
