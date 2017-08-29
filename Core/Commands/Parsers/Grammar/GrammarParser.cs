@@ -86,12 +86,6 @@ namespace Grimm.Core.Commands.Parsers
             while (Adjective.IsAdjective(nextArg))
             {
                 var adjective = Adjective.Parse(nextArg);
-
-                // Enforces an adjectives required position
-                if (adjective.HasRequiredPosition() &&
-                    adjective.RequiredPosition != idx + 1)
-                    return null;
-
                 adjectives.Add(Adjective.Parse(nextArg));
                 ++idx;
                 nextArg = this.Args.Args.ElementAt(idx);
@@ -249,7 +243,7 @@ namespace Grimm.Core.Commands.Parsers
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new NoObjectOfPrepositionException();
+                return null;
             }
         }
     }

@@ -10,13 +10,10 @@ namespace Grimm.Core.Commands.Parsers.Grammar
     {
         private static List<Adjective> Adjectives { get; } = new List<Adjective>();
 
-        public static readonly Adjective MY = new Adjective("my")
-            .WithRequiredPosition(1);
+        public static readonly Adjective MY = new Adjective("my");
 
-        public static readonly Adjective HIS = new Adjective("his")
-            .WithRequiredPosition(1);
-        public static readonly Adjective HER = new Adjective("her")
-            .WithRequiredPosition(1);
+        public static readonly Adjective HIS = new Adjective("his");
+        public static readonly Adjective HER = new Adjective("her");
 
         public static readonly Adjective TINY = new Adjective("tiny");
         public static readonly Adjective SMALL = new Adjective("small");
@@ -34,8 +31,6 @@ namespace Grimm.Core.Commands.Parsers.Grammar
 
         public string Word { get; private set; }
         public List<string> Aliases { get; private set; } = new List<string>();
-
-        public int? RequiredPosition;
 
         private Adjective(string name)
         {
@@ -67,18 +62,6 @@ namespace Grimm.Core.Commands.Parsers.Grammar
         public static Adjective Parse(string nameOrAlias)
         {
             return Adjectives.FirstOrDefault(a => a.IsNameOrAlias(nameOrAlias));
-        }
-
-        public bool HasRequiredPosition()
-        {
-            return this.RequiredPosition != null;
-        }
-
-        public Adjective WithRequiredPosition(int position)
-        {
-            this.RequiredPosition = position;
-
-            return this;
         }
 
         public bool IsNameOrAlias(string adjective)

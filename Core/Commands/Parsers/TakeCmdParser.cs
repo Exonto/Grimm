@@ -14,20 +14,24 @@ namespace Grimm.Core.Commands.Parsers
 {
     public class TakeCmdParser : ICommandParser<TakeCmd>
     {
-        public TakeCmd Command { get; }
+        private const string NO_SUBJECT = "What do you want to {0}?";
+        private const string NO_ITEM = "There is no {0} here.";
+        private const string ITEM_TAKEN = "Taken.";
+        private const string TAKE_ITEM_FROM_WHERE = "Take {0} from where?";
 
+        public TakeCmd Command { get; }
         public TakeCmdParser(TakeCmd cmd)
         {
             this.Command = cmd;
         }
 
-        public void ParseAndExecute(string alias, Arguments args = null)
+        public void ParseAndExecute(string nameOrAlias, Arguments args = null)
         {
             var grammar = new GrammarParser(args);
 
             if (!grammar.HasSubject())
             {
-                Output.WriteLine("You must choose what you want to take.");
+                Output.WriteLine(string.Format(NO_SUBJECT, nameOrAlias));
                 return;
             }
 
@@ -39,27 +43,29 @@ namespace Grimm.Core.Commands.Parsers
 
                 if (targetItem == null)
                 {
-                    Output.WriteNewLine($"There is no {target} here.");
+                    Output.WriteNewLine(string.Format(NO_ITEM, target));
                     return;
                 }
 
                 this.Command.TakeItemFromCurrentLocation(targetItem);
 
-                Output.WriteLine($"Taken.");
+                Output.WriteNewLine(ITEM_TAKEN);
                 return;
             }
 
             if (grammar.HasPrepositionAt(Preposition.FROM, 1) ||
                 grammar.HasPrepositionAt(Preposition.OUT, 1))
             {
-                if (grammar.HasObjectOfPreposition(Preposition.FROM) ||
-                    grammar.HasObjectOfPreposition(Preposition.OUT))
-                {
-                    target = grammar.GetSubject();
-                    var location = grammar.GetObjectOfPreposition(grammar.GetPreposition(1));
+                target = grammar.GetSubject();
+                var location = grammar.GetObjectOfPreposition(grammar.GetPreposition(1));
 
-                    TakeFrom(target, location);
+                if (location == null)
+                {
+                    Output.WriteLine(string.Format(TAKE_ITEM_FROM_WHERE, target));
+                    return;
                 }
+
+                TakeFrom(target, location);
             }
         }
 
