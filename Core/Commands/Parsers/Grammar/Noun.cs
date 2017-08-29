@@ -10,9 +10,9 @@ namespace Grimm.Core.Commands.Parsers.Grammar
     {
         public string Word { get; private set; }
         public List<Adjective> Adjectives { get; private set; } = new List<Adjective>();
-        public Noun(string name)
+        public Noun(string word)
         {
-            this.Word = name.ToLower();
+            this.Word = word.ToLower();
         }
 
         public void AddAdjective(Adjective adjective)

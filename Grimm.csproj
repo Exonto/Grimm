@@ -57,7 +57,6 @@
     <Compile Include="Core\Commands\Parsers\MoveCmdParser.cs" />
     <Compile Include="Core\Commands\Parsers\TakeCmdParser.cs" />
     <Compile Include="Core\Commands\Parsers\StartCmdParser.cs" />
-    <Compile Include="Core\Commands\Parsers\Util\RandomResponse.cs" />
     <Compile Include="Core\Commands\Prompts\ConfirmationPrompt.cs" />
     <Compile Include="Core\Commands\Prompts\InputPrompt.cs" />
     <Compile Include="Core\Commands\Prompts\Prompt.cs" />

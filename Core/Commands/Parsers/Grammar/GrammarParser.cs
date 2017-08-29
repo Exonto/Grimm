@@ -79,10 +79,10 @@ namespace Grimm.Core.Commands.Parsers
         /// </summary>
         /// <param name="idx"></param>
         /// <returns></returns>
-        public Noun GetNounAt(int idx)
+        private Noun GetNounAt(int idx)
         {
             var adjectives = new List<Adjective>();
-            var nextArg = this.Args.Args.ElementAt(0);
+            var nextArg = this.Args.Args.ElementAt(idx);
             while (Adjective.IsAdjective(nextArg))
             {
                 var adjective = Adjective.Parse(nextArg);

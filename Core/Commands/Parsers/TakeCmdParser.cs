@@ -39,17 +39,7 @@ namespace Grimm.Core.Commands.Parsers
 
             if (!grammar.HasAnyPreposition())
             {
-                var targetItem = GetItem(target);
-
-                if (targetItem == null)
-                {
-                    Output.WriteNewLine(string.Format(NO_ITEM, target));
-                    return;
-                }
-
-                this.Command.TakeItemFromCurrentLocation(targetItem);
-
-                Output.WriteNewLine(ITEM_TAKEN);
+                TakeFrom(target, new Noun("here"));
                 return;
             }
 
@@ -69,7 +59,7 @@ namespace Grimm.Core.Commands.Parsers
             }
         }
 
-        private Item GetItem(Noun itemNoun)
+        private Item GetItemFromCurrentLocation(Noun itemNoun)
         {
             var currentLoc = this.Command.GameState.GetPlayerLocation();
             return currentLoc.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
@@ -78,6 +68,24 @@ namespace Grimm.Core.Commands.Parsers
 
         private void TakeFrom(Noun target, Noun location)
         {
+            var locationWord = location.Word;
+
+            if (locationWord == "here")
+            {
+                var targetItem = GetItemFromCurrentLocation(target);
+
+                if (targetItem == null)
+                {
+                    Output.WriteNewLine(string.Format(NO_ITEM, target));
+                    return;
+                }
+
+                this.Command.TakeItemFromCurrentLocation(targetItem);
+
+                Output.WriteNewLine(ITEM_TAKEN);
+                return;
+            }
+
             if (location.Word != "chest")
             {
                 Output.WriteLine($"Cannot find a {location} here.");

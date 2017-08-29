@@ -32,9 +32,9 @@ namespace Grimm.Core.Commands.Parsers.Grammar
         public string Word { get; private set; }
         public List<string> Aliases { get; private set; } = new List<string>();
 
-        private Adjective(string name)
+        private Adjective(string word)
         {
-            this.Word = name;
+            this.Word = word;
 
             Adjectives.Add(this);
         }
