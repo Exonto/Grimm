@@ -70,6 +70,7 @@ namespace Grimm.Core.Commands.Parsers
         {
             var locationWord = location.Word;
 
+            // Special case where the word "here" is used to define the current location
             if (locationWord == "here")
             {
                 var targetItem = GetItemFromCurrentLocation(target);
@@ -93,7 +94,7 @@ namespace Grimm.Core.Commands.Parsers
             }
             else if (target.Word != "sword")
             {
-                Output.WriteLine($"There isn't a {target} inside the {location}");
+                Output.WriteLine($"There is no {target} inside {location}.");
                 return;
             }
 
