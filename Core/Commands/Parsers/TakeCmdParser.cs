@@ -19,6 +19,8 @@ namespace Grimm.Core.Commands.Parsers
         private const string ITEM_NOT_TAKEABLE = "You cannot take the {0}.";
         private const string ITEM_TAKEN = "Taken.";
         private const string TAKE_ITEM_FROM_WHERE = "Take {0} from where?";
+        private const string ITEM_NOT_CONTAINER = "The {0} is not a container.";
+        private const string NO_ITEM_IN_CONTAINER = "There is no {0} inside the {1}.";
 
         public TakeCmd Command { get; }
         public TakeCmdParser(TakeCmd cmd)
@@ -66,6 +68,13 @@ namespace Grimm.Core.Commands.Parsers
                                                                   i.Description.HasAdjectives(itemNoun.Adjectives));
         }
 
+        private Item GetItemFromContainer(Noun itemNoun, Noun containerNoun)
+        {
+            var containerItem = GetItemFromCurrentLocation(containerNoun);
+            return containerItem.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
+                                                                     i.Description.HasAdjectives(itemNoun.Adjectives));
+        }
+
         private void TakeFrom(Noun target, Noun location)
         {
             var locationWord = location.Word;
@@ -73,11 +82,54 @@ namespace Grimm.Core.Commands.Parsers
             // Special case where the word "here" is used to define the current location
             if (locationWord == "here")
             {
-                var targetItem = GetItemFromCurrentLocation(target);
+                TakeFromCurrentLocation(target);
+            }
+            else
+            {
+                TakeFromContainer(target, location);
+            }
+        }
 
-                if (targetItem == null)
+        private void TakeFromCurrentLocation(Noun target)
+        {
+            var targetItem = GetItemFromCurrentLocation(target);
+
+            if (targetItem == null)
+            {
+                Output.WriteNewLine(string.Format(NO_ITEM, target));
+                return;
+            }
+
+            if (!targetItem.IsTakeable)
+            {
+                Output.WriteNewLine(string.Format(ITEM_NOT_TAKEABLE, targetItem));
+                return;
+            }
+
+            this.Command.TakeItemFromCurrentLocation(targetItem);
+
+            Output.WriteNewLine(ITEM_TAKEN);
+            return;
+        }
+
+        private void TakeFromContainer(Noun target, Noun container)
+        {
+            // Check to see if there is an item
+            var containerItem = GetItemFromCurrentLocation(container);
+
+            if (containerItem != null)
+            {
+                if (!containerItem.IsContainer)
                 {
-                    Output.WriteNewLine(string.Format(NO_ITEM, target));
+                    Output.WriteNewLine(string.Format(ITEM_NOT_CONTAINER, containerItem));
+                    return;
+                }
+
+                var targetItem = GetItemFromContainer(target, container);
+
+                if (!containerItem.HasItem(targetItem))
+                {
+                    Output.WriteNewLine(string.Format(NO_ITEM_IN_CONTAINER, target.Word, containerItem));
                     return;
                 }
 
@@ -87,25 +139,10 @@ namespace Grimm.Core.Commands.Parsers
                     return;
                 }
 
-                this.Command.TakeItemFromCurrentLocation(targetItem);
-
-                Output.WriteNewLine(ITEM_TAKEN);
+                this.Command.TakeItemFromContainer(targetItem, containerItem);
+                Output.WriteLine(ITEM_TAKEN);
                 return;
             }
-
-            if (location.Word != "chest")
-            {
-                Output.WriteLine($"Cannot find a {location} here.");
-                return;
-            }
-            else if (target.Word != "sword")
-            {
-                Output.WriteLine($"There is no {target} inside {location}.");
-                return;
-            }
-
-            Output.WriteLine($"Taken.");
         }
-
     }
 }

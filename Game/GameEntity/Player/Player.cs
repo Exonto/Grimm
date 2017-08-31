@@ -57,5 +57,10 @@ namespace Grimm.Game
         {
             item.TakeFromLocation(this.Location, this.Inventory);
         }
+
+        public void TakeItemFromContainer(Item target, Item container)
+        {
+            target.TakeFromContainer(container, this.Inventory);
+        }
     }
 }

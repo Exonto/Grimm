@@ -30,5 +30,12 @@ namespace Grimm.Core.Commands.Results
 
             player.TakeItem(item);
         }
+
+        public void TakeItemFromContainer(Item target, Item container)
+        {
+            var player = this.GameState.Player;
+
+            player.TakeItemFromContainer(target, container);
+        }
     }
 }

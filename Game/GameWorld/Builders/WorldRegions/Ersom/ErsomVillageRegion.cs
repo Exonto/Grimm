@@ -39,9 +39,17 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
                 .WithAdjective(Adjective.SMALL)
                 ;
 
+            var apple = new Item("Apple")
+                .WithAdjective(Adjective.Colors.RED)
+                .WithAdjective(Adjective.FRESH)
+                .AsTakeable(true)
+                ;
+
             var chest = new Item("Chest")
                 .WithAdjective(Adjective.MY)
                 .AsTakeable(true)
+                .AsContainer(true)
+                    .AddItem(apple)
                 ;
 
             var ladder = new Item("Ladder")

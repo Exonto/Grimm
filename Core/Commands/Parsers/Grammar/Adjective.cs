@@ -25,7 +25,14 @@ namespace Grimm.Core.Commands.Parsers.Grammar
             .WithAlias("huge")
             .WithAlias("gigantic");
 
+        public static readonly Adjective FRESH = new Adjective("fresh");
+
         public static readonly Adjective WOODEN = new Adjective("wooden");
+
+        public struct Colors
+        {
+            public static readonly Adjective RED = new Adjective("red");
+        }
 
         // --------------------------------------------------------------------------------
 
