@@ -21,7 +21,7 @@ namespace Grimm.Game.GameWorld
             get { return _region; }
             set
             {
-                // The location's region must have this location within itself
+                // The location's region must have this location within itself beforehand
                 if (!value.HasLocation(this))
                     throw new NoLocationException(this, _region);
                 _region = value;

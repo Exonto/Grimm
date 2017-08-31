@@ -71,6 +71,9 @@
     <Compile Include="Core\Exceptions\NoObjectOfPrepositionException.cs" />
     <Compile Include="Core\Output.cs" />
     <Compile Include="Game\CommandLine.cs" />
+    <Compile Include="Game\Exceptions\ItemExceptions\ItemAlreadyExistsException.cs" />
+    <Compile Include="Game\Exceptions\ItemExceptions\ItemDoesNotExistException.cs" />
+    <Compile Include="Game\Exceptions\ItemExceptions\ItemException.cs" />
     <Compile Include="Game\Exceptions\Player\PlayerTakeException.cs" />
     <Compile Include="Game\GameEntity\Entity.cs" />
     <Compile Include="Game\Exceptions\Player\PlayerMoveException.cs" />

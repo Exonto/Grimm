@@ -55,11 +55,7 @@ namespace Grimm.Game
 
         public void TakeItem(Item item)
         {
-            if (!this.Location.HasItem(item))
-                throw new PlayerTakeException(item, this.Location);
-
-            this.Location.RemoveItem(item);
-            this.Inventory.AddItem(item);
+            item.TakeFromLocation(this.Location, this.Inventory);
         }
     }
 }

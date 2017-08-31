@@ -41,6 +41,7 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
 
             var chest = new Item("Chest")
                 .WithAdjective(Adjective.MY)
+                .AsTakeable(true)
                 ;
 
             var ladder = new Item("Ladder")

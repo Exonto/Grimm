@@ -16,6 +16,7 @@ namespace Grimm.Core.Commands.Parsers
     {
         private const string NO_SUBJECT = "What do you want to {0}?";
         private const string NO_ITEM = "There is no {0} here.";
+        private const string ITEM_NOT_TAKEABLE = "You cannot take the {0}.";
         private const string ITEM_TAKEN = "Taken.";
         private const string TAKE_ITEM_FROM_WHERE = "Take {0} from where?";
 
@@ -46,7 +47,6 @@ namespace Grimm.Core.Commands.Parsers
             if (grammar.HasPrepositionAt(Preposition.FROM, 1) ||
                 grammar.HasPrepositionAt(Preposition.OUT, 1))
             {
-                target = grammar.GetSubject();
                 var location = grammar.GetObjectOfPreposition(grammar.GetPreposition(1));
 
                 if (location == null)
@@ -78,6 +78,12 @@ namespace Grimm.Core.Commands.Parsers
                 if (targetItem == null)
                 {
                     Output.WriteNewLine(string.Format(NO_ITEM, target));
+                    return;
+                }
+
+                if (!targetItem.IsTakeable)
+                {
+                    Output.WriteNewLine(string.Format(ITEM_NOT_TAKEABLE, targetItem));
                     return;
                 }
 

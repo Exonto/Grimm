@@ -1,4 +1,5 @@
-﻿using Grimm.Game.GameWorld.Items;
+﻿using Grimm.Game.Exceptions.ItemExceptions;
+using Grimm.Game.GameWorld.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace Grimm.Game
 
         public void RemoveItem(Item item)
         {
-            this.Items.Remove(item);
+            var didExist = this.Items.Remove(item);
+
+            if (!didExist)
+                throw new ItemDoesNotExistException(item, this);
         }
 
         public bool HasItem(Item item)

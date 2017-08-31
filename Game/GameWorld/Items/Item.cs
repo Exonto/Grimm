@@ -1,4 +1,5 @@
 ﻿using Grimm.Core.Commands.Parsers.Grammar;
+using Grimm.Game.Exceptions.ItemExceptions;
 using Grimm.Game.GameWorld.Util;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,21 @@ namespace Grimm.Game.GameWorld.Items
             this.IsTakeable = isTakeable;
 
             return this;
+        }
+
+        public void TakeFromLocation(Location loc, Inventory inventory)
+        {
+            if (!this.IsTakeable)
+                throw new ItemException($"The item {this} cannot be taken.");
+
+            loc.RemoveItem(this);
+
+            inventory.AddItem(this);
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
     }
 }
