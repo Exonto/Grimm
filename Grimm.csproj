@@ -86,6 +86,8 @@
     <Compile Include="Game\GameWorld\Events\PlayerLocationChangedEventArgs.cs" />
     <Compile Include="Game\GameWorld\Items\Item.cs" />
     <Compile Include="Game\GameWorld\Util\Description.cs" />
+    <Compile Include="Game\GameWorld\Util\IDescribable.cs" />
+    <Compile Include="Game\GameWorld\Util\LocationDescription.cs" />
     <Compile Include="Game\GameWorld\Util\IItemDescription.cs" />
     <Compile Include="Game\GameWorld\Util\OffsetList.cs" />
     <Compile Include="Game\ICommandLine.cs" />

@@ -19,7 +19,7 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
             region.TreeHouse_TopFloor = Build_TreeHouseTopFloor();
 
             region.TreeHouse_BottomFloor = new Location(0, 0, 1)
-                .WithDescription(new Description()
+                .WithDescription(new LocationDescription()
                     .WithLine("You are on the ground floor of your treehouse."));
 
             region.TreeHouse_Base = new Location(0, 0, 0);
@@ -38,14 +38,20 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
                 .WithAdjective(Adjective.WOODEN)
                 .WithAdjective(Adjective.SMALL)
                 ;
-            var chest = new Item("Chest");
-            var ladder = new Item("Ladder");
+
+            var chest = new Item("Chest")
+                .WithAdjective(Adjective.MY)
+                ;
+
+            var ladder = new Item("Ladder")
+                ;
+
             var loc = new Location(0, 0, 2)
                 .AddItem(bed)
                 .AddItem(chest)
                 .AddItem(ladder)
 
-                .WithDescription(new Description()
+                .WithDescription(new LocationDescription()
                     .WithLine("You are on the upper loft of your treehouse.")
                     .WithLine("You use this small space as your bedroom.")
 

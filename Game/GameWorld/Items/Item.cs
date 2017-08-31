@@ -1,4 +1,5 @@
 ﻿using Grimm.Core.Commands.Parsers.Grammar;
+using Grimm.Game.GameWorld.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,29 +8,21 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld.Items
 {
-    public class Item
+    public class Item : IDescribable<Description>
     {
         public string Name { get; set; }
         public List<string> Aliases { get; private set; } = new List<string>();
-        public List<Adjective> Adjectives { get; private set; } = new List<Adjective>();
+        public Description Description { get; set; } = new Description();
+
+        public bool IsTakeable { get; set; } = false;
         public Item(string name)
         {
             this.Name = name;
         }
 
-        public bool HasAdjective(Adjective adjective)
-        {
-            return this.Adjectives.Contains(adjective);
-        }
-
-        public bool HasAdjectives(List<Adjective> adjectives)
-        {
-            return adjectives.All(a => HasAdjective(a));
-        }
-
         public Item WithAdjective(Adjective adjective)
         {
-            this.Adjectives.Add(adjective);
+            this.Description.WithAdjective(adjective);
 
             return this;
         }
@@ -43,6 +36,13 @@ namespace Grimm.Game.GameWorld.Items
         public Item WithAlias(string alias)
         {
             this.Aliases.Add(alias);
+
+            return this;
+        }
+
+        public Item AsTakeable(bool isTakeable)
+        {
+            this.IsTakeable = isTakeable;
 
             return this;
         }

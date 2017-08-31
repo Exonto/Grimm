@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld.Util
 {
-    public interface IItemDescription
+    public interface IDescribable<T> where T : Description
     {
-        IItemDescription WithItemDescriptionLine(string line);
-        LocationDescription BuildItemDescription();
+        T Description { get; }
     }
 }

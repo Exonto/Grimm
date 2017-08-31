@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld
 {
-    public class Location
+    public class Location : IDescribable<LocationDescription>
     {
         #region Basics
 
@@ -32,7 +32,7 @@ namespace Grimm.Game.GameWorld
         public int Y { get { return (int) this.Pos.Y; } }
         public int Z { get { return (int) this.Pos.Z; } }
 
-        public Description Description { get; private set; } = new Description();
+        public LocationDescription Description { get; private set; } = new LocationDescription();
         public Inventory Inventory { get; private set; } = new Inventory();
 
         public Location(int x, int y, int z, Region region)
@@ -106,7 +106,7 @@ namespace Grimm.Game.GameWorld
             WriteDescription(this.Description);
         }
 
-        public void WriteDescription(Description description)
+        public void WriteDescription(LocationDescription description)
         {
             description.Lines.ForEach(l => Output.WriteLine(l));
             Output.WriteLine();
@@ -122,7 +122,7 @@ namespace Grimm.Game.GameWorld
             }
         }
 
-        public Location WithDescription(Description description)
+        public Location WithDescription(LocationDescription description)
         {
             this.Description = description;
 

@@ -1,4 +1,4 @@
-﻿using Grimm.Game.GameWorld.Items;
+﻿using Grimm.Core.Commands.Parsers.Grammar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,37 +7,24 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld.Util
 {
-    public class Description : IItemDescription
+    public class Description
     {
-        public List<string> Lines { get; private set; } = new List<string>();
+        List<Adjective> Adjectives { get; set; } = new List<Adjective>();
 
-        public Dictionary<Item, List<string>> ItemDescriptions = new Dictionary<Item, List<string>>();
-        private Item ItemBeingBuilt;
-
-        public Description WithLine(string line)
+        public bool HasAdjective(Adjective adjective)
         {
-            this.Lines.Add(line);
-
-            return this;
+            return this.Adjectives.Contains(adjective);
         }
 
-        public Description WithItem(Item item)
+        public bool HasAdjectives(List<Adjective> adjectives)
         {
-            this.ItemBeingBuilt = item;
-            this.ItemDescriptions.Add(item, new List<string>());
-
-            return this;
+            return adjectives.All(a => HasAdjective(a));
         }
 
-        public IItemDescription WithItemDescriptionLine(string line)
+        public Description WithAdjective(Adjective adjective)
         {
-            this.ItemDescriptions[this.ItemBeingBuilt].Add(line);
+            this.Adjectives.Add(adjective);
 
-            return this;
-        }
-
-        public Description BuildItemDescription()
-        {
             return this;
         }
     }

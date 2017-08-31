@@ -63,7 +63,7 @@ namespace Grimm.Core.Commands.Parsers
         {
             var currentLoc = this.Command.GameState.GetPlayerLocation();
             return currentLoc.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
-                                                                  i.HasAdjectives(itemNoun.Adjectives));
+                                                                  i.Description.HasAdjectives(itemNoun.Adjectives));
         }
 
         private void TakeFrom(Noun target, Noun location)
