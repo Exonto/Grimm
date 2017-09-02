@@ -52,6 +52,7 @@ namespace Grimm.Core.Commands
             commands.Add(new MoveCmd(gameState));
             commands.Add(new TakeCmd(gameState));
             commands.Add(new InspectCmd(gameState));
+            commands.Add(new InventoryCmd(gameState));
 
             return commands;
         }

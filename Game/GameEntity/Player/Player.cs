@@ -4,6 +4,7 @@ using Grimm.Game.Exceptions.Player;
 using Grimm.Game.GameEntity;
 using Grimm.Game.GameWorld;
 using Grimm.Game.GameWorld.Items;
+using Grimm.Game.GameWorld.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,14 @@ namespace Grimm.Game
         public Location Location { get; set; }
         public Region Region { get { return this.Location.Region; } }
         public World World { get { return this.Region.World; } }
+
+        private IOutputService _outputService;
+        private Player(IOutputService outputService)
+        {
+            _outputService = outputService;
+        }
         public Player(string name)
+            : this(new OutputService())
         {
             this.Name = name;
         }
@@ -71,6 +79,12 @@ namespace Grimm.Game
         public void InspectItemInContainer(Item target, Item container)
         {
             target.InspectInContainer(container);
+        }
+
+        public void OpenInventory()
+        {
+            Output.WriteLine("Items in Your Inventory");
+            _outputService.OutputInventory(this.Inventory);
         }
     }
 }

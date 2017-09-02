@@ -40,7 +40,7 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
 
                 .AsTakeable(true)
 
-                .WithDescriptionLine("This is your comfy, although somewhat small, wooden bed.");
+                .WithDescriptionLine("This is your comfy, although somewhat small, wooden bed.")
                 ;
             bed.ItemStrings.ITEM_TAKEN.RemoveResponses();
             bed.ItemStrings.ITEM_TAKEN
