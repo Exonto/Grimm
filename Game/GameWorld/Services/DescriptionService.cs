@@ -34,6 +34,7 @@ namespace Grimm.Game.GameWorld.Services
         {
             OutputDescription(loc.Description);
             OutputItemDescriptions(loc);
+            Output.WriteLine();
         }
     }
 }

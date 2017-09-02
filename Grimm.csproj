@@ -48,6 +48,7 @@
     <Compile Include="Core\Commands\Arguments.cs" />
     <Compile Include="Core\Commands\Command.cs" />
     <Compile Include="Core\Commands\CommandDirectory.cs" />
+    <Compile Include="Core\Commands\LookCmd.cs" />
     <Compile Include="Core\Commands\MoveCmd.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\Adjective.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\GrammarParser.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Core\Commands\Parsers\ICommandParser.cs" />
     <Compile Include="Core\Commands\InspectCmd.cs" />
     <Compile Include="Core\Commands\Parsers\InspectCmdParser.cs" />
+    <Compile Include="Core\Commands\Parsers\LookCmdParser.cs" />
     <Compile Include="Core\Commands\Parsers\IParserService.cs" />
     <Compile Include="Core\Commands\Parsers\MoveCmdParser.cs" />
     <Compile Include="Core\Commands\Parsers\ParserService.cs" />

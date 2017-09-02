@@ -1,6 +1,7 @@
 ﻿using Grimm.Core.Commands.Parsers;
 using Grimm.Core.Commands.Prompts;
 using Grimm.Game;
+using Grimm.Game.GameWorld.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Grimm.Core.Commands
 {
-    public class InventoryCmd : Command
+    public class LookCmd : Command
     {
-        public InventoryCmd(GameState state) 
-            : base("inventory", new string[] { "inv" })
+        public LookCmd(GameState state) 
+            : base("look", new string[] { })
         {
             this.GameState = state;
 
-            base._parser = new InventoryCmdParser(this);
+            base._parser = new LookCmdParser(this);
         }
 
         public override void Execute(string alias, Arguments args = null)
@@ -24,11 +25,18 @@ namespace Grimm.Core.Commands
             base._parser.ParseAndExecute(alias, args);
         }
 
-        public void OpenPlayerInventory()
+        public void OutputLocationDescription()
         {
             var player = this.GameState.Player;
 
-            player.OpenInventory();
+            player.Location.OutputDescription();
+        }
+
+        public void LookInsideContainer(Item container)
+        {
+            var player = this.GameState.Player;
+
+            player.LookInsideContainer(container);
         }
     }
 }

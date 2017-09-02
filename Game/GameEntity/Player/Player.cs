@@ -86,5 +86,11 @@ namespace Grimm.Game
             Output.WriteLine("Items in Your Inventory");
             _outputService.OutputInventory(this.Inventory);
         }
+
+        public void LookInsideContainer(Item container)
+        {
+            Output.WriteLine($"Inventory of the {container}");
+            container.LookInside();
+        }
     }
 }

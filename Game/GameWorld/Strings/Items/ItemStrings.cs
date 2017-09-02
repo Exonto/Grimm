@@ -49,6 +49,10 @@ namespace Grimm.Game.GameWorld.Strings.Items
             .WithResponse("From where do you want to inspect a {0}?")
             ;
 
+        public static readonly RandomResponse LOOK_INSIDE_WHAT = new RandomResponse()
+            .WithResponse("What do you want to look inside of?")
+            ;
+
         public RandomResponse ITEM_TAKEN { get; private set; } = new RandomResponse()
             .WithResponse("Taken.")
             ;

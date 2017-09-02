@@ -25,12 +25,17 @@ namespace Grimm.Game.GameWorld.Items
         public bool IsContainer { get; set; } = false;
 
         private IDescriptionService _descriptionService;
-        public Item(IDescriptionService descriptionService)
+        private IOutputService _outputService;
+        private Item(
+            IDescriptionService descriptionService,
+            IOutputService outputService)
         {
             _descriptionService = descriptionService;
+            _outputService = outputService;
         }
         public Item(string name)
-            : this(new DescriptionService())
+            : this(new DescriptionService(),
+                   new OutputService())
         {
             this.Name = name;
         }
@@ -141,6 +146,14 @@ namespace Grimm.Game.GameWorld.Items
                 throw new ItemDoesNotExistException(this, container.Inventory);
 
             Inspect();
+        }
+
+        public void LookInside()
+        {
+            if (!this.IsContainer)
+                throw new ItemException($"The item {this} is not a container.");
+
+            _outputService.OutputInventory(this.Inventory);
         }
 
         public override string ToString()
