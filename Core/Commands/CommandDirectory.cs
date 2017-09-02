@@ -1,4 +1,5 @@
-﻿using Grimm.Core.Commands.Results;
+﻿using Grimm.Core.Commands.Parsers;
+using Grimm.Core.Commands.Results;
 using Grimm.Core.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace Grimm.Core.Commands
             commands.Add(new StartCmd());
             commands.Add(new MoveCmd(gameState));
             commands.Add(new TakeCmd(gameState));
+            commands.Add(new InspectCmd(gameState));
 
             return commands;
         }

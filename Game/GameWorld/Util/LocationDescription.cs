@@ -9,13 +9,13 @@ namespace Grimm.Game.GameWorld.Util
 {
     public class LocationDescription : DescriptionBase<LocationDescription>, IItemDescription
     {
-        public Dictionary<Item, List<string>> ItemDescriptions = new Dictionary<Item, List<string>>();
+        public Dictionary<Item, Description> ItemDescriptions = new Dictionary<Item, Description>();
         private Item ItemBeingBuilt;
 
         public LocationDescription WithItem(Item item)
         {
             this.ItemBeingBuilt = item;
-            this.ItemDescriptions.Add(item, new List<string>());
+            this.ItemDescriptions.Add(item, new Description());
 
             return this;
         }
@@ -28,7 +28,7 @@ namespace Grimm.Game.GameWorld.Util
         /// <returns></returns>
         public IItemDescription WithItemDescriptionLine(string line)
         {
-            this.ItemDescriptions[this.ItemBeingBuilt].Add(line);
+            this.ItemDescriptions[this.ItemBeingBuilt].WithLine(line);
 
             return this;
         }

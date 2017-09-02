@@ -3,6 +3,7 @@ using Grimm.Core.Commands.Prompts;
 using Grimm.Core.Commands.Prompts.Results;
 using Grimm.Core.Commands.Results;
 using Grimm.Game.GameWorld.Items;
+using Grimm.Game.GameWorld.Strings.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace Grimm.Core.Commands.Parsers
     {
         private const string NO_SUBJECT = "What do you want to {0}?";
         private const string NO_ITEM = "There is no {0} here.";
-        private const string ITEM_NOT_TAKEABLE = "You cannot take the {0}.";
         private const string ITEM_TAKEN = "Taken.";
         private const string TAKE_ITEM_FROM_WHERE = "Take {0} from where?";
         private const string ITEM_NOT_CONTAINER = "The {0} is not a container.";
@@ -93,7 +93,7 @@ namespace Grimm.Core.Commands.Parsers
 
             if (!targetItem.IsTakeable)
             {
-                Output.WriteNewLine(string.Format(ITEM_NOT_TAKEABLE, targetItem));
+                ItemStrings.ITEM_CANNOT_BE_TAKEN.OutputResponse(targetItem.Name);
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace Grimm.Core.Commands.Parsers
 
                 if (!targetItem.IsTakeable)
                 {
-                    Output.WriteNewLine(string.Format(ITEM_NOT_TAKEABLE, targetItem));
+                    ItemStrings.ITEM_CANNOT_BE_TAKEN.OutputResponse(targetItem.Name);
                     return;
                 }
 

@@ -37,6 +37,10 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
                 .WithAdjective(Adjective.MY)
                 .WithAdjective(Adjective.WOODEN)
                 .WithAdjective(Adjective.SMALL)
+
+                .AsTakeable(true)
+
+                .WithDescriptionLine("asfjaslkf aksldfj asdfj asjlkasdjf lksafalskdf jasl fdsalfj asj lfjsadlf las aslfdasdl afjsdlalsd fasdl asdlfa.");
                 ;
 
             var apple = new Item("Apple")

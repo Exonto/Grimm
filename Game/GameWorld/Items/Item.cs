@@ -1,5 +1,8 @@
-﻿using Grimm.Core.Commands.Parsers.Grammar;
+﻿using Grimm.Core;
+using Grimm.Core.Commands.Parsers.Grammar;
 using Grimm.Game.Exceptions.ItemExceptions;
+using Grimm.Game.GameWorld.Services;
+using Grimm.Game.GameWorld.Strings.Items;
 using Grimm.Game.GameWorld.Util;
 using System;
 using System.Collections.Generic;
@@ -18,7 +21,14 @@ namespace Grimm.Game.GameWorld.Items
 
         public bool IsTakeable { get; set; } = false;
         public bool IsContainer { get; set; } = false;
+
+        private IDescriptionService _descriptionService;
+        public Item(IDescriptionService descriptionService)
+        {
+            _descriptionService = descriptionService;
+        }
         public Item(string name)
+            : this(new DescriptionService())
         {
             this.Name = name;
         }
@@ -39,6 +49,13 @@ namespace Grimm.Game.GameWorld.Items
         public Item WithAlias(string alias)
         {
             this.Aliases.Add(alias);
+
+            return this;
+        }
+
+        public Item WithDescriptionLine(string line)
+        {
+            this.Description.WithLine(line);
 
             return this;
         }
@@ -100,6 +117,17 @@ namespace Grimm.Game.GameWorld.Items
                 throw new ItemException($"The item {this} is not a container.");
 
             return this.Inventory.HasItem(item);
+        }
+
+        public void Inspect()
+        {
+            if (this.Description.Lines.Count == 0)
+            {
+                ItemStrings.ITEM_HAS_NO_DESCRIPTION.OutputResponse(this.Name, "amazing");
+                return;
+            }
+
+            _descriptionService.OutputDescription(this.Description);
         }
 
         public override string ToString()

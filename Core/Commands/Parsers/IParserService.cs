@@ -13,6 +13,8 @@ namespace Grimm.Core.Commands.Parsers
     {
         GameState GameState { get; }
 
+        bool HasItemInCurrentLocation(Noun itemNoun);
+        bool HasItemInContainer(Noun itemNoun, Noun containerNoun);
         Item GetItemFromCurrentLocation(Noun itemNoun);
         Item GetItemFromContainer(Noun itemNoun, Noun containerNoun);
     }

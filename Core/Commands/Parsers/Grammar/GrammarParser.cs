@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Grimm.Core.Commands.Parsers
 {
-    public class GrammarParser
+    public class GrammarParser : IGrammarParser
     {
         private Arguments Args { get; set; }
         private Arguments Original { get; set; }

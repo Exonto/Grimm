@@ -2,6 +2,7 @@
 using Grimm.Game.Exceptions;
 using Grimm.Game.GameWorld.Events;
 using Grimm.Game.GameWorld.Items;
+using Grimm.Game.GameWorld.Services;
 using Grimm.Game.GameWorld.Util;
 using System;
 using System.Collections.Generic;
@@ -35,20 +36,29 @@ namespace Grimm.Game.GameWorld
         public LocationDescription Description { get; private set; } = new LocationDescription();
         public Inventory Inventory { get; private set; } = new Inventory();
 
-        public Location(int x, int y, int z, Region region)
+        private IDescriptionService _descriptionService;
+        public Location(IDescriptionService descriptionService)
+        {
+            _descriptionService = descriptionService;
+        }
+        public Location(int x, int y, int z, Region region) 
+            : this(new DescriptionService())
         {
             this.Pos = new Vector(x, y, z);
             this.Region = region;
         }
-        public Location(int x, int y, int z)
+        public Location(int x, int y, int z) 
+            : this(new DescriptionService())
         {
             this.Pos = new Vector(x, y, z);
         }
-        public Location(Vector pos)
+        public Location(Vector pos) 
+            : this(new DescriptionService())
         {
             this.Pos = pos;
         }
-        public Location(Vector pos, Region region)
+        public Location(Vector pos, Region region) 
+            : this(new DescriptionService())
         {
             this.Pos = pos;
             this.Region = region;
@@ -103,23 +113,12 @@ namespace Grimm.Game.GameWorld
             if (args.To != this)
                 return;
 
-            WriteDescription(this.Description);
+            OutputDescription();
         }
 
-        public void WriteDescription(LocationDescription description)
+        public void OutputDescription()
         {
-            description.Lines.ForEach(l => Output.WriteLine(l));
-            Output.WriteLine();
-
-            var items = description.ItemDescriptions.Keys;
-            foreach (var item in items)
-            {
-                if (!HasItem(item))
-                    continue;
-
-                var itemDescription = description.ItemDescriptions[item];
-                itemDescription.ForEach(l => Output.WriteLine(l));
-            }
+            _descriptionService.OutputLocationDescription(this);
         }
 
         public Location WithDescription(LocationDescription description)
