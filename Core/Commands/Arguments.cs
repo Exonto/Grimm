@@ -16,6 +16,8 @@ namespace Grimm.Core.Commands
         public Arguments(List<string> args)
         {
             this.Args = args;
+
+            RemoveWhitespaceArgs();
         }
 
         public bool HasAtLeast(int numberOfArgs)
@@ -41,6 +43,11 @@ namespace Grimm.Core.Commands
         public string ElementAt(int index)
         {
             return this.Args.ElementAt(index);
+        }
+
+        private void RemoveWhitespaceArgs()
+        {
+            this.Args.RemoveAll(a => string.IsNullOrWhiteSpace(a));
         }
     }
 }

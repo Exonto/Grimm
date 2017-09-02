@@ -17,6 +17,8 @@ namespace Grimm.Game.GameWorld.Items
         public string Name { get; set; }
         public List<string> Aliases { get; private set; } = new List<string>();
         public Description Description { get; set; } = new Description();
+        public ItemStrings ItemStrings { get; set; } = new ItemStrings();
+
         public Inventory Inventory { get; private set; } = new Inventory();
 
         public bool IsTakeable { get; set; } = false;
@@ -128,6 +130,17 @@ namespace Grimm.Game.GameWorld.Items
             }
 
             _descriptionService.OutputDescription(this.Description);
+        }
+
+        public void InspectInContainer(Item container)
+        {
+            if (!container.IsContainer)
+                throw new ItemException($"The item {container} is not a container.");
+
+            if (!container.HasItem(this))
+                throw new ItemDoesNotExistException(this, container.Inventory);
+
+            Inspect();
         }
 
         public override string ToString()

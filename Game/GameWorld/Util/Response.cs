@@ -18,10 +18,8 @@ namespace Grimm.Game.GameWorld.Util
             return this;
         }
 
-        public void OutputResponse(params string[] stringsToInsert)
+        public void OutputResponse(params object[] objectsToInsert)
         {
-            var objectsToInsert = stringsToInsert.Cast<object>().ToArray();
-
             this.Lines.ForEach(l => Output.WriteLine(string.Format(l, objectsToInsert)));
             Output.WriteLine();
         }

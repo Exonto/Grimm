@@ -62,5 +62,15 @@ namespace Grimm.Game
         {
             target.TakeFromContainer(container, this.Inventory);
         }
+
+        public void InspectItem(Item target)
+        {
+            target.Inspect();
+        }
+
+        public void InspectItemInContainer(Item target, Item container)
+        {
+            target.InspectInContainer(container);
+        }
     }
 }

@@ -15,13 +15,6 @@ namespace Grimm.Core.Commands.Parsers
 {
     public class TakeCmdParser : ICommandParser<TakeCmd>
     {
-        private const string NO_SUBJECT = "What do you want to {0}?";
-        private const string NO_ITEM = "There is no {0} here.";
-        private const string ITEM_TAKEN = "Taken.";
-        private const string TAKE_ITEM_FROM_WHERE = "Take {0} from where?";
-        private const string ITEM_NOT_CONTAINER = "The {0} is not a container.";
-        private const string NO_ITEM_IN_CONTAINER = "There is no {0} inside the {1}.";
-
         public TakeCmd Command { get; }
 
         private IParserService _parserService;
@@ -39,7 +32,7 @@ namespace Grimm.Core.Commands.Parsers
 
             if (!grammar.HasSubject())
             {
-                Output.WriteLine(string.Format(NO_SUBJECT, nameOrAlias));
+                ItemStrings.WHAT_ITEM.OutputResponse(nameOrAlias);
                 return;
             }
 
@@ -52,18 +45,24 @@ namespace Grimm.Core.Commands.Parsers
             }
 
             if (grammar.HasPrepositionAt(Preposition.FROM, 1) ||
-                grammar.HasPrepositionAt(Preposition.OUT, 1))
+                grammar.HasPrepositionAt(Preposition.OUT, 1) ||
+                grammar.HasPrepositionAt(Preposition.IN, 1) ||
+                grammar.HasPrepositionAt(Preposition.WITHIN, 1) ||
+                grammar.HasPrepositionAt(Preposition.INSIDE, 1))
             {
                 var location = grammar.GetObjectOfPreposition(grammar.GetPreposition(1));
 
                 if (location == null)
                 {
-                    Output.WriteLine(string.Format(TAKE_ITEM_FROM_WHERE, target));
+                    ItemStrings.TAKE_FROM_WHERE.OutputResponse(target);
                     return;
                 }
 
                 TakeFrom(target, location);
+                return;
             }
+
+            CommandStrings.NO_UNDERSTAND_TAKE.OutputResponse(target);
         }
 
         private void TakeFrom(Noun target, Noun location)
@@ -72,13 +71,9 @@ namespace Grimm.Core.Commands.Parsers
 
             // Special case where the word "here" is used to define the current location
             if (locationWord == "here")
-            {
                 TakeFromCurrentLocation(target);
-            }
             else
-            {
                 TakeFromContainer(target, location);
-            }
         }
 
         private void TakeFromCurrentLocation(Noun target)
@@ -87,7 +82,7 @@ namespace Grimm.Core.Commands.Parsers
 
             if (targetItem == null)
             {
-                Output.WriteNewLine(string.Format(NO_ITEM, target));
+                ItemStrings.ITEM_DOES_NOT_EXIST.OutputResponse(target);
                 return;
             }
 
@@ -99,7 +94,7 @@ namespace Grimm.Core.Commands.Parsers
 
             this.Command.TakeItemFromCurrentLocation(targetItem);
 
-            Output.WriteNewLine(ITEM_TAKEN);
+            targetItem.ItemStrings.ITEM_TAKEN.OutputResponse();
             return;
         }
 
@@ -112,7 +107,7 @@ namespace Grimm.Core.Commands.Parsers
             {
                 if (!containerItem.IsContainer)
                 {
-                    Output.WriteNewLine(string.Format(ITEM_NOT_CONTAINER, containerItem));
+                    ItemStrings.ITEM_NOT_CONTAINER.OutputResponse(container);
                     return;
                 }
 
@@ -120,20 +115,22 @@ namespace Grimm.Core.Commands.Parsers
 
                 if (!containerItem.HasItem(targetItem))
                 {
-                    Output.WriteNewLine(string.Format(NO_ITEM_IN_CONTAINER, target.Word, containerItem));
+                    ItemStrings.ITEM_NOT_IN_CONTAINER.OutputResponse(target, container);
                     return;
                 }
 
                 if (!targetItem.IsTakeable)
                 {
-                    ItemStrings.ITEM_CANNOT_BE_TAKEN.OutputResponse(targetItem.Name);
+                    ItemStrings.ITEM_CANNOT_BE_TAKEN.OutputResponse(target);
                     return;
                 }
 
                 this.Command.TakeItemFromContainer(targetItem, containerItem);
-                Output.WriteLine(ITEM_TAKEN);
+                targetItem.ItemStrings.ITEM_TAKEN.OutputResponse();
                 return;
             }
+
+            ItemStrings.ITEM_DOES_NOT_EXIST.OutputResponse(container);
         }
     }
 }

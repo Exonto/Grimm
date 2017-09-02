@@ -20,7 +20,7 @@ namespace Grimm.Core.Commands
 
             var cmd = GetCommand(cmdName);
 
-            args.Args.ForEach(a => a = a.ToLower());
+            args.Args.ForEach(a => a = a.ToLower().Trim());
             cmd.Execute(cmdName.ToLower(), args);
         }
 

@@ -40,13 +40,18 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
 
                 .AsTakeable(true)
 
-                .WithDescriptionLine("asfjaslkf aksldfj asdfj asjlkasdjf lksafalskdf jasl fdsalfj asj lfjsadlf las aslfdasdl afjsdlalsd fasdl asdlfa.");
+                .WithDescriptionLine("This is your comfy, although somewhat small, wooden bed.");
                 ;
+            bed.ItemStrings.ITEM_TAKEN.RemoveResponses();
+            bed.ItemStrings.ITEM_TAKEN
+                .WithResponse("With great effort, you slowly haul one side of the bed up to your shoulders with the other end dragging behind you.");
 
             var apple = new Item("Apple")
                 .WithAdjective(Adjective.Colors.RED)
                 .WithAdjective(Adjective.FRESH)
                 .AsTakeable(true)
+
+                .WithDescriptionLine("A shiny red apple.")
                 ;
 
             var chest = new Item("Chest")

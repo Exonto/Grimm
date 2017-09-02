@@ -96,6 +96,7 @@
     <Compile Include="Game\GameWorld\Items\ItemFactory.cs" />
     <Compile Include="Game\GameWorld\Services\DescriptionService.cs" />
     <Compile Include="Game\GameWorld\Services\IDescriptionService.cs" />
+    <Compile Include="Game\GameWorld\Strings\Items\CommandStrings.cs" />
     <Compile Include="Game\GameWorld\Strings\Items\ItemStrings.cs" />
     <Compile Include="Game\GameWorld\Util\Description.cs" />
     <Compile Include="Game\GameWorld\Util\DescriptionBase.cs" />

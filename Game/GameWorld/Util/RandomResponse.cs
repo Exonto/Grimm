@@ -26,14 +26,23 @@ namespace Grimm.Game.GameWorld.Util
 
         public Response GetResponse()
         {
-            var randomGenerator = new Random();
+            var index = 0;
+            if (this.Responses.Count >= 1)
+            {
+                var randomGenerator = new Random();
 
-            var index = randomGenerator.Next(this.Responses.Count);
+                index = randomGenerator.Next(this.Responses.Count);
+            }
 
             return this.Responses[index];
         }
 
-        public void OutputResponse(params string[] stringsToInsert)
+        public void RemoveResponses()
+        {
+            this.Responses.Clear();
+        }
+
+        public void OutputResponse(params object[] stringsToInsert)
         {
             var randomResponse = GetResponse();
             randomResponse.OutputResponse(stringsToInsert);

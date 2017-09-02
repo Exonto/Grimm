@@ -1,5 +1,6 @@
 ﻿using Grimm.Core.Commands.Parsers;
 using Grimm.Game;
+using Grimm.Game.GameWorld.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,20 @@ namespace Grimm.Core.Commands
         public override void Execute(string alias, Arguments args = null)
         {
             base._parser.ParseAndExecute(alias, args);
+        }
+
+        public void InspectItemInCurrentLocation(Item item)
+        {
+            var player = this.GameState.Player;
+
+            player.InspectItem(item);
+        }
+
+        public void InspectItemInContainer(Item item, Item container)
+        {
+            var player = this.GameState.Player;
+
+            player.InspectItemInContainer(item, container);
         }
     }
 }
