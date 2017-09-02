@@ -7,19 +7,10 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld.Util
 {
-    public class LocationDescription : Description, IItemDescription
+    public class LocationDescription : DescriptionBase<LocationDescription>, IItemDescription
     {
-        public List<string> Lines { get; private set; } = new List<string>();
-
         public Dictionary<Item, List<string>> ItemDescriptions = new Dictionary<Item, List<string>>();
         private Item ItemBeingBuilt;
-
-        public LocationDescription WithLine(string line)
-        {
-            this.Lines.Add(line);
-
-            return this;
-        }
 
         public LocationDescription WithItem(Item item)
         {

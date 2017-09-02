@@ -23,9 +23,14 @@ namespace Grimm.Core.Commands.Parsers
         private const string NO_ITEM_IN_CONTAINER = "There is no {0} inside the {1}.";
 
         public TakeCmd Command { get; }
+
+        private IParserService _parserService;
+
         public TakeCmdParser(TakeCmd cmd)
         {
             this.Command = cmd;
+
+            _parserService = new ParserService(cmd.GameState);
         }
 
         public void ParseAndExecute(string nameOrAlias, Arguments args = null)
@@ -61,20 +66,6 @@ namespace Grimm.Core.Commands.Parsers
             }
         }
 
-        private Item GetItemFromCurrentLocation(Noun itemNoun)
-        {
-            var currentLoc = this.Command.GameState.GetPlayerLocation();
-            return currentLoc.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
-                                                                  i.Description.HasAdjectives(itemNoun.Adjectives));
-        }
-
-        private Item GetItemFromContainer(Noun itemNoun, Noun containerNoun)
-        {
-            var containerItem = GetItemFromCurrentLocation(containerNoun);
-            return containerItem.Inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
-                                                                     i.Description.HasAdjectives(itemNoun.Adjectives));
-        }
-
         private void TakeFrom(Noun target, Noun location)
         {
             var locationWord = location.Word;
@@ -92,7 +83,7 @@ namespace Grimm.Core.Commands.Parsers
 
         private void TakeFromCurrentLocation(Noun target)
         {
-            var targetItem = GetItemFromCurrentLocation(target);
+            var targetItem = _parserService.GetItemFromCurrentLocation(target);
 
             if (targetItem == null)
             {
@@ -115,7 +106,7 @@ namespace Grimm.Core.Commands.Parsers
         private void TakeFromContainer(Noun target, Noun container)
         {
             // Check to see if there is an item
-            var containerItem = GetItemFromCurrentLocation(container);
+            var containerItem = _parserService.GetItemFromCurrentLocation(container);
 
             if (containerItem != null)
             {
@@ -125,7 +116,7 @@ namespace Grimm.Core.Commands.Parsers
                     return;
                 }
 
-                var targetItem = GetItemFromContainer(target, container);
+                var targetItem = _parserService.GetItemFromContainer(target, container);
 
                 if (!containerItem.HasItem(targetItem))
                 {

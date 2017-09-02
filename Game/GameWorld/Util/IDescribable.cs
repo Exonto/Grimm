@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grimm.Game.GameWorld.Util
 {
-    public interface IDescribable<T> where T : Description
+    public interface IDescribable<T> where T : DescriptionBase<T>
     {
         T Description { get; }
     }
