@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Grimm.Core.Commands;
+using Grimm.Core;
 
 namespace Grimm.Game
 {
@@ -48,6 +49,7 @@ namespace Grimm.Game
 
             if (this.CommandDirectory.Exists(cmdName))
             {
+                Output.WriteLine();
                 this.CommandDirectory.ExecuteCommand(cmdName, args);
             }
         }

@@ -39,7 +39,6 @@ namespace Grimm.Core.Commands
                 return;
             }
 
-            Output.WriteNewLine("You moved " + dir.Name);
             player.Move(dir);
         }
 

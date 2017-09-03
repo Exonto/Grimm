@@ -20,7 +20,8 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
 
             region.TreeHouse_BottomFloor = new Location(0, 0, 1)
                 .WithDescription(new LocationDescription()
-                    .WithLine("You are on the ground floor of your treehouse."));
+                    .WithLine("You are on the ground floor of your treehouse.")
+            );
 
             region.TreeHouse_Base = new Location(0, 0, 0);
 

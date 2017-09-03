@@ -13,13 +13,16 @@ namespace Grimm.Game.GameWorld.Services
         public void OutputDescription<T>(DescriptionBase<T> description) where T : DescriptionBase<T>
         {
             description.Lines.ForEach(l => Output.WriteLine(l));
-            Output.WriteLine();
         }
 
         public void OutputItemDescriptions(Location loc)
         {
             var description = loc.Description;
             var items = description.ItemDescriptions.Keys;
+
+            if (items.Count == 0)
+                return;
+
             foreach (var item in items)
             {
                 if (!loc.HasItem(item))
@@ -28,13 +31,14 @@ namespace Grimm.Game.GameWorld.Services
                 var itemDescription = description.ItemDescriptions[item];
                 itemDescription.Lines.ForEach(l => Output.WriteLine(l));
             }
+            Output.WriteLine();
         }
 
         public void OutputLocationDescription(Location loc)
         {
             OutputDescription(loc.Description);
-            OutputItemDescriptions(loc);
             Output.WriteLine();
+            OutputItemDescriptions(loc);
         }
     }
 }
