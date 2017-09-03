@@ -1,5 +1,6 @@
 ﻿using Grimm.Core;
 using Grimm.Game.Exceptions;
+using Grimm.Game.Exceptions.ItemExceptions;
 using Grimm.Game.Exceptions.Player;
 using Grimm.Game.GameEntity;
 using Grimm.Game.GameWorld;
@@ -91,6 +92,11 @@ namespace Grimm.Game
         {
             Output.WriteLine($"Inventory of the {container}");
             container.LookInside();
+        }
+
+        public void DropItem(Item item)
+        {
+            item.RemoveFromInventory(this.Inventory, this.Location);
         }
     }
 }

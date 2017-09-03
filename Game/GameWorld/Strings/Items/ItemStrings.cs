@@ -19,8 +19,17 @@ namespace Grimm.Game.GameWorld.Strings.Items
             .WithResponse("You cannot take this.")
             ;
 
+        public static readonly RandomResponse ITEM_CANNOT_BE_DROPPED = new RandomResponse()
+            .WithResponse("You really need to keep this in your inventory.")
+            ;
+
         public static readonly RandomResponse ITEM_DOES_NOT_EXIST = new RandomResponse()
             .WithResponse("There is no {0} here.")
+            ;
+
+        public static readonly RandomResponse ITEM_NOT_IN_PLAYER_INVENTORY = new RandomResponse()
+            .WithResponse("There is no {0} in your inventory.")
+            .WithResponse("You don't have that.")
             ;
 
         public static readonly RandomResponse ITEM_NOT_IN_CONTAINER = new RandomResponse()
@@ -55,6 +64,10 @@ namespace Grimm.Game.GameWorld.Strings.Items
 
         public RandomResponse ITEM_TAKEN { get; private set; } = new RandomResponse()
             .WithResponse("Taken.")
+            ;
+
+        public RandomResponse ITEM_DROPPED { get; private set; } = new RandomResponse()
+            .WithResponse("Dropped.")
             ;
     }
 }

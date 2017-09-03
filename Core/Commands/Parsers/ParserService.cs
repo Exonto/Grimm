@@ -29,6 +29,11 @@ namespace Grimm.Core.Commands.Parsers
             var containerItem = GetItemFromCurrentLocation(containerNoun);
             return HasItemInInventory(itemNoun, containerItem.Inventory); ;
         }
+
+        public bool HasItemInInventory(Noun itemNoun, Inventory inventory)
+        {
+            return GetItemFromInventory(itemNoun, inventory) != null;
+        }
         
         public Item GetItemFromCurrentLocation(Noun itemNoun)
         {
@@ -42,12 +47,7 @@ namespace Grimm.Core.Commands.Parsers
             return GetItemFromInventory(itemNoun, containerItem.Inventory);
         }
 
-        private bool HasItemInInventory(Noun itemNoun, Inventory inventory)
-        {
-            return GetItemFromInventory(itemNoun, inventory) != null;
-        }
-
-        private Item GetItemFromInventory(Noun itemNoun, Inventory inventory)
+        public Item GetItemFromInventory(Noun itemNoun, Inventory inventory)
         {
             return inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
                                                        i.Description.HasAdjectives(itemNoun.Adjectives));

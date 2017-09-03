@@ -16,5 +16,9 @@ namespace Grimm.Game.GameWorld.Strings.Items
         public static readonly RandomResponse NO_UNDERSTAND_INSPECT = new RandomResponse()
             .WithResponse("What are you trying to inspect?")
             ;
+
+        public static readonly RandomResponse NO_UNDERSTAND_LOOK = new RandomResponse()
+            .WithResponse("What are you trying to look inside of?")
+            ;
     }
 }

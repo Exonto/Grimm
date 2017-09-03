@@ -22,6 +22,7 @@ namespace Grimm.Game.GameWorld.Items
         public Inventory Inventory { get; private set; } = new Inventory();
 
         public bool IsTakeable { get; set; } = false;
+        public bool IsDroppable { get; set; } = true;
         public bool IsContainer { get; set; } = false;
 
         private IDescriptionService _descriptionService;
@@ -74,6 +75,13 @@ namespace Grimm.Game.GameWorld.Items
             return this;
         }
 
+        public Item AsDroppable(bool isDroppable)
+        {
+            this.IsDroppable = isDroppable;
+
+            return this;
+        }
+
         public Item AsContainer(bool isContainer)
         {
             this.IsContainer = isContainer;
@@ -99,6 +107,16 @@ namespace Grimm.Game.GameWorld.Items
             container.RemoveItem(this);
 
             putIn.AddItem(this);
+        }
+
+        public void RemoveFromInventory(Inventory inventory, Location loc)
+        {
+            if (!this.IsDroppable)
+                throw new ItemException($"The item {this} cannot be dropped.");
+
+            inventory.RemoveItem(this);
+
+            loc.AddItem(this);
         }
 
         public Item AddItem(Item item)
