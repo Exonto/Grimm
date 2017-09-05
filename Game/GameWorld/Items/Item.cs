@@ -48,10 +48,18 @@ namespace Grimm.Game.GameWorld.Items
             return this;
         }
 
+        public Noun GetNoun()
+        {
+            var itemNoun = new Noun(this.Name);
+            itemNoun.AddAdjectives(this.Description.Adjectives);
+
+            return itemNoun;
+        }
+
         public bool IsNameOrAlias(string word)
         {
-            return this.Name.ToLower() == word ||
-                   this.Aliases.Contains(word);
+            return this.Name.ToLower() == word.ToLower() ||
+                   this.Aliases.Any(a => a.ToLower() == word.ToLower());
         }
 
         public Item WithAlias(string alias)

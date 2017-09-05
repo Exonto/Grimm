@@ -55,11 +55,21 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
                 .WithDescriptionLine("A shiny red apple.")
                 ;
 
+            var notebook = new Item("Notebook")
+                .WithAlias("Journal")
+                .WithDescriptionLine("This leather backed book has been your journal for many years.")
+                .WithAdjective(Adjective.MY)
+                .WithAdjective(Adjective.LEATHER)
+
+                .AsTakeable(true)
+                ;
+
             var chest = new Item("Chest")
                 .WithAdjective(Adjective.MY)
                 .AsTakeable(true)
                 .AsContainer(true)
                     .AddItem(apple)
+                    .AddItem(notebook)
                 ;
 
             var ladder = new Item("Ladder")

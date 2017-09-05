@@ -56,6 +56,8 @@
     <Compile Include="Core\Commands\Parsers\Grammar\IGrammarParser.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\Noun.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\Preposition.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Article.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Vowel.cs" />
     <Compile Include="Core\Commands\Parsers\ICommandParser.cs" />
     <Compile Include="Core\Commands\InspectCmd.cs" />
     <Compile Include="Core\Commands\Parsers\InspectCmdParser.cs" />

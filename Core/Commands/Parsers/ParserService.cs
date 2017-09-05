@@ -49,7 +49,7 @@ namespace Grimm.Core.Commands.Parsers
 
         public Item GetItemFromInventory(Noun itemNoun, Inventory inventory)
         {
-            return inventory.Items.FirstOrDefault(i => i.Name.ToLower() == itemNoun.Word.ToLower() &&
+            return inventory.Items.FirstOrDefault(i => i.IsNameOrAlias(itemNoun.Word) &&
                                                        i.Description.HasAdjectives(itemNoun.Adjectives));
         }
     }

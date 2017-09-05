@@ -39,6 +39,12 @@ namespace Grimm.Game.GameWorld.Services
             OutputDescription(loc.Description);
             Output.WriteLine();
             OutputItemDescriptions(loc);
+
+            // Get items which have not been given special location descriptions
+            var otherItems = loc.Inventory.Items
+                .Where(i => !loc.Description.ItemDescriptions.Keys.Contains(i))
+                .ToList();
+            otherItems.ForEach(i => Output.WriteLine($"There is {i.GetNoun().GetPrefixArticle()} {i} here."));
         }
     }
 }

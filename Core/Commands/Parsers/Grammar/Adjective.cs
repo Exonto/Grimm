@@ -28,6 +28,7 @@ namespace Grimm.Core.Commands.Parsers.Grammar
         public static readonly Adjective FRESH = new Adjective("fresh");
 
         public static readonly Adjective WOODEN = new Adjective("wooden");
+        public static readonly Adjective LEATHER = new Adjective("leather");
 
         public struct Colors
         {

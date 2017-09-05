@@ -20,9 +20,24 @@ namespace Grimm.Core.Commands.Parsers.Grammar
             this.Adjectives.Add(adjective);
         }
 
+        public void AddAdjectives(List<Adjective> adjectives)
+        {
+            this.Adjectives.AddRange(adjectives);
+        }
+
         public bool HasAdjective(Adjective adjective)
         {
             return this.Adjectives.Contains(adjective);
+        }
+
+        public Article GetPrefixArticle()
+        {
+            var firstLetter = this.Word.FirstOrDefault().ToString();
+
+            if (string.IsNullOrEmpty(firstLetter) || Vowel.IsVowel(firstLetter))
+                return Article.AN;
+            else
+                return Article.A;
         }
 
         public override string ToString()
