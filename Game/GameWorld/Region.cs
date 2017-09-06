@@ -31,6 +31,8 @@ namespace Grimm.Game.GameWorld
             this.Name = name;
         }
 
+        protected abstract void Build();
+
         private void SubscribeToWorld(World world)
         {
             this.Grid.ForEach(l => l.SubscribeToWorld(this.World));

@@ -37,28 +37,40 @@ namespace Grimm.Game.GameWorld
         public Inventory Inventory { get; private set; } = new Inventory();
 
         private IDescriptionService _descriptionService;
-        public Location(IDescriptionService descriptionService)
+
+        public Location()
+            : this(new DescriptionService())
+        {
+        }
+        private Location(IDescriptionService descriptionService)
         {
             _descriptionService = descriptionService;
         }
-        public Location(int x, int y, int z, Region region) 
-            : this(new DescriptionService())
+        public Location(Vector relative, Direction direction)
+            : this()
+        {
+            var position = new Vector(relative.InDirection(direction));
+
+            this.Pos = position;
+        }
+        public Location(int x, int y, int z, Region region)
+            : this()
         {
             this.Pos = new Vector(x, y, z);
             this.Region = region;
         }
         public Location(int x, int y, int z) 
-            : this(new DescriptionService())
+            : this()
         {
             this.Pos = new Vector(x, y, z);
         }
         public Location(Vector pos) 
-            : this(new DescriptionService())
+            : this()
         {
             this.Pos = pos;
         }
         public Location(Vector pos, Region region) 
-            : this(new DescriptionService())
+            : this()
         {
             this.Pos = pos;
             this.Region = region;
@@ -124,6 +136,27 @@ namespace Grimm.Game.GameWorld
         public Location WithDescription(LocationDescription description)
         {
             this.Description = description;
+
+            return this;
+        }
+
+        public Location WithPosition(Vector pos)
+        {
+            this.Pos = pos;
+
+            return this;
+        }
+
+        public Location WithPosition(int x, int y, int z)
+        {
+            this.Pos = new Vector(x, y, z);
+
+            return this;
+        }
+
+        public Location WithPosition(Vector relative, Direction direction)
+        {
+            this.Pos = relative.InDirection(direction);
 
             return this;
         }

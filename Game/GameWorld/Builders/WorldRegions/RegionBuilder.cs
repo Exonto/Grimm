@@ -1,4 +1,5 @@
 ﻿using Grimm.Game.GameWorld;
+using Grimm.Game.GameWorld.Builders.WorldRegions.Ersom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions
         {
             var regions = new List<Region>();
 
-            regions.Add(BuildErsom());
+            var ersomVillage = new ErsomVillageRegion();
+
+            regions.Add(ersomVillage);
 
             return regions;
         }

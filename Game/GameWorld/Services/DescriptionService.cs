@@ -31,7 +31,6 @@ namespace Grimm.Game.GameWorld.Services
                 var itemDescription = description.ItemDescriptions[item];
                 itemDescription.Lines.ForEach(l => Output.WriteLine(l));
             }
-            Output.WriteLine();
         }
 
         public void OutputLocationDescription(Location loc)
@@ -45,6 +44,7 @@ namespace Grimm.Game.GameWorld.Services
                 .Where(i => !loc.Description.ItemDescriptions.Keys.Contains(i))
                 .ToList();
             otherItems.ForEach(i => Output.WriteLine($"There is {i.GetNoun().GetPrefixArticle()} {i} here."));
+            Output.WriteLine();
         }
     }
 }

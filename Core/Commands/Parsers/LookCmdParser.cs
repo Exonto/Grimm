@@ -52,8 +52,6 @@ namespace Grimm.Core.Commands.Parsers
                     LookInsideContainer(location);
                     return;
                 }
-
-                CommandStrings.NO_UNDERSTAND_LOOK.OutputResponse();
             }
 
             CommandStrings.NO_UNDERSTAND_LOOK.OutputResponse();
