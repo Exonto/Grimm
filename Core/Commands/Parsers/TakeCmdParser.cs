@@ -80,6 +80,24 @@ namespace Grimm.Core.Commands.Parsers
         {
             var targetItem = _parserService.GetItemFromCurrentLocation(target);
 
+            if (target.Word == "all" || target.Word == "everything")
+            {
+                var takeableItems = this.Command.GameState.Player.GetItemsInCurrentLocation()
+                    .Where(i => i.IsTakeable)
+                    .ToList();
+
+                if (takeableItems.Count == 0)
+                {
+                    ItemStrings.LOCATION_HAS_NO_TAKEABLE_ITEMS.OutputResponse();
+                    return;
+                }
+
+                this.Command.TakeItemsFromCurrentLocation(takeableItems);
+
+                takeableItems.ForEach(i => i.ItemStrings.ITEM_TAKEN_VERBOSE.OutputResponse(i));
+                return;
+            }
+
             if (targetItem == null)
             {
                 ItemStrings.ITEM_DOES_NOT_EXIST.OutputResponse(target);
@@ -111,11 +129,29 @@ namespace Grimm.Core.Commands.Parsers
                     return;
                 }
 
+                if (target.Word == "all" || target.Word == "everything")
+                {
+                    var takeableItems = containerItem.Inventory.Items
+                        .Where(i => i.IsTakeable)
+                        .ToList();
+
+                    if (takeableItems.Count == 0)
+                    {
+                        ItemStrings.CONTAINER_HAS_NO_TAKEABLE_ITEMS.OutputResponse(containerItem);
+                        return;
+                    }
+
+                    this.Command.TakeItemsFromContainer(containerItem, takeableItems);
+
+                    takeableItems.ForEach(i => i.ItemStrings.ITEM_TAKEN_FROM_VERBOSE.OutputResponse(i, containerItem));
+                    return;
+                }
+
                 var targetItem = _parserService.GetItemFromContainer(target, container);
 
                 if (!containerItem.HasItem(targetItem))
                 {
-                    ItemStrings.ITEM_NOT_IN_CONTAINER.OutputResponse(target, container);
+                    ItemStrings.ITEM_NOT_IN_CONTAINER.OutputResponse(target, containerItem);
                     return;
                 }
 

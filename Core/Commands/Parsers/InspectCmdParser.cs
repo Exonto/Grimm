@@ -105,7 +105,7 @@ namespace Grimm.Core.Commands.Parsers
 
                 if (!containerItem.HasItem(targetItem))
                 {
-                    ItemStrings.ITEM_NOT_IN_CONTAINER.OutputResponse(target, container);
+                    ItemStrings.ITEM_NOT_IN_CONTAINER.OutputResponse(target, containerItem);
                     return;
                 }
 
