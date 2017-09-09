@@ -23,13 +23,14 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
 
         protected override void Build()
         {
-            this.TreeHouse_TopFloor = Build_TreeHouseTopFloor()
+            this.TreeHouse_TopFloor = Build_TreehouseTopFloor()
                 .WithPosition(0, 0, 2);
 
-            this.TreeHouse_BottomFloor = Build_TreeHouseBottomFloor()
+            this.TreeHouse_BottomFloor = Build_TreehouseBottomFloor()
                 .WithPosition(this.TreeHouse_TopFloor.Pos, Direction.DOWN);
 
-            this.TreeHouse_Base = new Location(0, 0, 0);
+            this.TreeHouse_Base = Build_TreehouseBase()
+                .WithPosition(this.TreeHouse_BottomFloor.Pos, Direction.DOWN);
 
             this.AddLocation(this.TreeHouse_TopFloor);
             this.AddLocation(this.TreeHouse_BottomFloor);

@@ -112,7 +112,7 @@ namespace Grimm.Core
             var words = output.Split(' ');
             return words.Skip(1).Aggregate(words.Take(1).ToList(), (l, w) =>
             {
-                if (l.Last().Length + w.Length >= 80)
+                if (l.Last().Length + w.Length >= 79)
                     l.Add(w);
                 else
                     l[l.Count - 1] += " " + w;

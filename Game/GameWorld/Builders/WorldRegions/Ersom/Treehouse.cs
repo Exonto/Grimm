@@ -11,7 +11,7 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
 {
     public partial class ErsomVillageRegion
     {
-        public Location Build_TreeHouseTopFloor()
+        public Location Build_TreehouseTopFloor()
         {
             var bed = new Item("Bed")
                 .WithAdjective(Adjective.MY)
@@ -80,11 +80,26 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
             return loc;
         }
 
-        public Location Build_TreeHouseBottomFloor()
+        public Location Build_TreehouseBottomFloor()
         {
+            var chair = new Item("Chair")
+                .WithAdjective(Adjective.WOODEN)
+
+                .WithDescriptionLine("This handcrafted wooden chair was built by Samuel quite some time ago.")
+                ;
+
+
             var loc = new Location()
+                .AddItem(chair)
+
                 .WithDescription(new LocationDescription()
-                    .WithLine("You are on the lower floor of your tree house.")
+                    .WithLine("You are on the lower floor of your treehouse.")
+                    .WithLine("Going straight through the center of the house is the trunk of the oak tree.")
+                    .WithLine("There are a couple windows along wall which circles the trunk.")
+
+                    .WithItem(chair)
+                    .WithItemDescriptionLine("To the side of one of the windows is a chair which has sat, mostly unused since you received it.")
+                    .BuildItemDescription()
                 );
 
             return loc;

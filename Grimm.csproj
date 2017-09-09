@@ -52,7 +52,7 @@
     <Compile Include="Core\Commands\LookCmd.cs" />
     <Compile Include="Core\Commands\MoveCmd.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\Adjective.cs" />
-    <Compile Include="Core\Commands\Parsers\Grammar\Contraction.cs" />
+    <Compile Include="Core\Commands\Parsers\Grammar\Conjunction.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\GrammarParser.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\IGrammarParser.cs" />
     <Compile Include="Core\Commands\Parsers\Grammar\Noun.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Game\Exceptions\Player\PlayerException.cs" />
     <Compile Include="Game\Exceptions\World\WorldException.cs" />
     <Compile Include="Game\GameState.cs" />
+    <Compile Include="Game\GameWorld\Builders\WorldRegions\Ersom\OutsideTreehouse.cs" />
     <Compile Include="Game\GameWorld\Builders\WorldRegions\Ersom\Treehouse.cs" />
     <Compile Include="Game\GameWorld\Builders\WorldRegions\Regions.cs" />
     <Compile Include="Game\GameWorld\Direction.cs" />
