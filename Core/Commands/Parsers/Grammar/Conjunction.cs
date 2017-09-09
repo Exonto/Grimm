@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Grimm.Core.Commands.Parsers.Grammar
 {
-    public class Contraction
+    public class Conjunction
     {
-        private static List<Contraction> Contractions { get; } = new List<Contraction>();
+        private static List<Conjunction> Contractions { get; } = new List<Conjunction>();
 
-        public static readonly Contraction AND = new Contraction("and");
-        public static readonly Contraction OR = new Contraction("or");
+        public static readonly Conjunction AND = new Conjunction("and");
+        public static readonly Conjunction OR = new Conjunction("or");
 
         private string Word { get; }
-        private Contraction(string word)
+        private Conjunction(string word)
         {
             this.Word = word;
 
@@ -30,6 +30,11 @@ namespace Grimm.Core.Commands.Parsers.Grammar
         public static bool IsContraction(string contraction)
         {
             return Contractions.Any(a => a.Word == contraction.ToLower());
+        }
+
+        public static Conjunction Parse(string contraction)
+        {
+            return Contractions.FirstOrDefault(c => c.Word == contraction.ToLower());
         }
     }
 }
