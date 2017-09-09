@@ -15,6 +15,7 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
         public Location TreeHouse_TopFloor { get; set; }
         public Location TreeHouse_BottomFloor { get; set; }
         public Location TreeHouse_Base { get; set; }
+        public Location PathToErsomFromTreehouse { get; set; }
         public ErsomVillageRegion()
             : base(Regions.ERSOM_VILLAGE, "Ersom Village")
         {
@@ -32,9 +33,13 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
             this.TreeHouse_Base = Build_TreehouseBase()
                 .WithPosition(this.TreeHouse_BottomFloor.Pos, Direction.DOWN);
 
+            this.PathToErsomFromTreehouse = Build_PathToErsomFromTreehouse()
+                .WithPosition(this.TreeHouse_Base.Pos, Direction.NORTH);
+
             this.AddLocation(this.TreeHouse_TopFloor);
             this.AddLocation(this.TreeHouse_BottomFloor);
             this.AddLocation(this.TreeHouse_Base);
+            this.AddLocation(this.PathToErsomFromTreehouse);
         }
     }
 }

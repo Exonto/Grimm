@@ -88,7 +88,6 @@ namespace Grimm.Game.GameWorld.Builders.WorldRegions.Ersom
                 .WithDescriptionLine("This handcrafted wooden chair was built by Samuel quite some time ago.")
                 ;
 
-
             var loc = new Location()
                 .AddItem(chair)
 

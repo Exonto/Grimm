@@ -159,7 +159,7 @@ namespace Grimm.Game.GameWorld
             var linear = new List<Location>();
             for (var x = 0; x < this.Grid.Count; x++)
             {
-                for (var y = 0; y < this.Grid.Count; y++)
+                for (var y = 0; y < this.Grid[x].Count; y++)
                 {
                     for (var z = 0; z < this.Grid.Count; z++)
                     {
@@ -175,7 +175,7 @@ namespace Grimm.Game.GameWorld
         {
             for (var x = 0; x < this.Grid.Count; x++)
             {
-                for (var y = 0; y < this.Grid.Count; y++)
+                for (var y = 0; y < this.Grid[x].Count; y++)
                 {
                     this.Grid[x][y].ForEach(action);
                 }
