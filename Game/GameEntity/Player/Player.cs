@@ -49,6 +49,11 @@ namespace Grimm.Game
             return true;
         }
 
+        public List<Item> GetItemsInCurrentLocation()
+        {
+            return this.Location.Inventory.Items;
+        }
+
         public void Move(Direction dir)
         {
             Move(this.Location.GetAdjacent(dir));
@@ -67,9 +72,19 @@ namespace Grimm.Game
             item.TakeFromLocation(this.Location, this.Inventory);
         }
 
+        public void TakeItems(List<Item> items)
+        {
+            items.ForEach(i => this.TakeItem(i));
+        }
+
         public void TakeItemFromContainer(Item target, Item container)
         {
             target.TakeFromContainer(container, this.Inventory);
+        }
+
+        public void TakeItemsFromContainer(Item container, List<Item> items)
+        {
+            items.ForEach(i => this.TakeItemFromContainer(i, container));
         }
 
         public void InspectItem(Item target)

@@ -31,11 +31,25 @@ namespace Grimm.Core.Commands.Results
             player.TakeItem(item);
         }
 
+        public void TakeItemsFromCurrentLocation(List<Item> items)
+        {
+            var player = this.GameState.Player;
+
+            player.TakeItems(items);
+        }
+
         public void TakeItemFromContainer(Item target, Item container)
         {
             var player = this.GameState.Player;
 
             player.TakeItemFromContainer(target, container);
+        }
+
+        public void TakeItemsFromContainer(Item container, List<Item> items)
+        {
+            var player = this.GameState.Player;
+
+            player.TakeItemsFromContainer(container, items);
         }
     }
 }

@@ -47,6 +47,14 @@ namespace Grimm.Game.GameWorld.Strings.Items
             .WithResponse("The {0} cannot hold anything.")
             ;
 
+        public static readonly RandomResponse CONTAINER_HAS_NO_TAKEABLE_ITEMS = new RandomResponse()
+            .WithResponse("There are no items in the {0} that can be taken.")
+            ;
+
+        public static readonly RandomResponse LOCATION_HAS_NO_TAKEABLE_ITEMS = new RandomResponse()
+            .WithResponse("There are no items that can be taken.")
+            ;
+
         public static readonly RandomResponse ITEM_HAS_NO_DESCRIPTION = new RandomResponse()
             .WithResponse("The {0} is quite boring.")
             .WithResponse("The {0} is uninteresting.")
@@ -64,6 +72,14 @@ namespace Grimm.Game.GameWorld.Strings.Items
 
         public RandomResponse ITEM_TAKEN { get; private set; } = new RandomResponse()
             .WithResponse("Taken.")
+            ;
+
+        public RandomResponse ITEM_TAKEN_VERBOSE { get; private set; } = new RandomResponse()
+            .WithResponse("You took the {0}.")
+            ;
+
+        public RandomResponse ITEM_TAKEN_FROM_VERBOSE { get; private set; } = new RandomResponse()
+            .WithResponse("You took the {0} from the {1}.")
             ;
 
         public RandomResponse ITEM_DROPPED { get; private set; } = new RandomResponse()

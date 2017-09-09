@@ -11,14 +11,16 @@ namespace Grimm.Core.Commands.Parsers.Grammar
     {
         private static List<Article> Articles { get; } = new List<Article>();
 
-        public static readonly Article A = new Article("a");
-        public static readonly Article AN = new Article("an");
-        public static readonly Article THE = new Article("the");
+        public static readonly Article A = new Article("a", false);
+        public static readonly Article AN = new Article("an", false);
+        public static readonly Article THE = new Article("the", true);
 
         private string Word { get; }
-        private Article(string word)
+        private bool IsDefinite { get; }
+        private Article(string word, bool isDefinite)
         {
             this.Word = word;
+            this.IsDefinite = isDefinite;
 
             Articles.Add(this);
         }
